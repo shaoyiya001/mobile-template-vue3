@@ -1,11 +1,13 @@
 <template>
   <div class="home">我是home组件</div>
-  <van-button type="primary" size="small">小型按钮</van-button>
+  <van-button type="primary" size="small" @click="handleClick">小型按钮</van-button>
 </template>
 
 <script setup>
 import { ref, reactive, toRefs, onBeforeMount, onMounted, watchEffect, computed, getCurrentInstance } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { indexStore } from '@/store';
+import { storeToRefs } from 'pinia';
 const { proxy } = getCurrentInstance();
 // proxy 替代 this
 /**
@@ -21,7 +23,11 @@ const router = useRouter();
 * 数据部分
 */
 const data = reactive({})
+const store = indexStore();
+const { current } = storeToRefs(store)
+
 onBeforeMount(() => {
+  console.log(current.value)
   //console.log('2.组件挂载页面之前执行----onBeforeMount')
 })
 onMounted(() => {
@@ -30,6 +36,11 @@ onMounted(() => {
 })
 watchEffect(()=>{
 })
+
+const handleClick = () => {
+  console.log('点击事件')
+}
+
 // 使用toRefs解构
 // let { } = { ...toRefs(data) } 
 defineExpose({
