@@ -1,19 +1,4 @@
-import { defineStore } from 'pinia'
+import { createPinia } from 'pinia'
+const pinia = createPinia()
 
-export const indexStore = defineStore('index', {
-    state: () => {
-        return {
-            current: 2,
-        }
-    },
-    getters: {
-        maxCurrent(state) {
-            return state.current * 10
-        }
-    },
-    actions: {
-        setCurrent() {
-            this.current + 10
-        }
-    }
-})
+export default pinia

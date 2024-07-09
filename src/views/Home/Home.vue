@@ -1,12 +1,22 @@
 <template>
   <div class="home">我是home组件</div>
-  <van-button type="primary" size="small" @click="handleClick">小型按钮</van-button>
+  <hr />
+  <div>useCurrentStore不解构 ====> {{ store.current }}</div>
+  <div>useUserStore解构出来的值 ====> {{ count }}</div>
+  <hr />
+  <div>query路由方式携带参数：{{route.query.id}} --- {{ route.query.name }}</div>
+  <div>params路由方式携带参数：{{route.params.id}} --- {{ route.params.name }}</div>
+  <hr />
+  <van-button type="primary" size="small" @click="handleClick">add增加</van-button>
+  <hr />
+  <van-button type="primary" size="small" @click="handleRouter">about页面</van-button>
 </template>
 
 <script setup>
 import { ref, reactive, toRefs, onBeforeMount, onMounted, watchEffect, computed, getCurrentInstance } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { indexStore } from '@/store';
+import { useCurrentStore } from '@/store/modules/current';
+import { useUserStore } from '@/store/modules/user';
 import { storeToRefs } from 'pinia';
 const { proxy } = getCurrentInstance();
 // proxy 替代 this
@@ -23,22 +33,39 @@ const router = useRouter();
 * 数据部分
 */
 const data = reactive({})
-const store = indexStore();
-const { current } = storeToRefs(store)
+/** pinia 第一种方式 */
+const store = useCurrentStore();
+// const { current } = store; // 切记！！！不能直接解构使用，直接解构不是响应式的，需使用storeToRefs()方法进行解构
+
+/** pinia 第二种方式 */
+const users = useUserStore();
+const { count } = storeToRefs(users);
 
 onBeforeMount(() => {
-  console.log(current.value)
+  console.log("store", store.current)
+  console.log("count", count.value)
   //console.log('2.组件挂载页面之前执行----onBeforeMount')
 })
 onMounted(() => {
   showToast('No need to import showToast');
   //console.log('3.-组件挂载到页面之后执行-------onMounted')
 })
-watchEffect(()=>{
+watchEffect(() => {
+  console.log('')
 })
 
 const handleClick = () => {
-  console.log('点击事件')
+  // store.current++
+  // count.value++
+  // store.setCurrent();
+  store.setCurrentNum(1)
+  users.increment()
+  users.getList()
+}
+
+const handleRouter = () => {
+  console.log('路由跳转')
+  router.push('/about')
 }
 
 // 使用toRefs解构
@@ -48,5 +75,5 @@ defineExpose({
 })
 
 </script>
-<style scoped lang='less'>
+<style scoped lang='scss'>
 </style>
