@@ -1,5 +1,9 @@
 <script setup>
 // import HelloWorld from './components/HelloWorld.vue'
+
+// const sm4 = new SM4(sm4Config) //
+// const datas = sm4.decrypt(response.data.data) // 解密
+// const datas = sm4.encrypt(response.data.data) // 加密
 </script>
 
 <template>

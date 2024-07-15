@@ -13,9 +13,11 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "gm-crypto": "^0.1.12",
     "js-cookie": "^3.0.5",
     "node-sass": "^6.0.1",
     "normalize.css": "^8.0.1",
+    "sm-crypto": "^0.3.13",
     "vant": "^4.9.1",
     "vue": "^3.4.29",
     "vue-router": "^4.4.0"
